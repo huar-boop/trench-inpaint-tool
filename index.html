@@ -30,3 +30,18 @@
   </div>
 </body>
 </html>
+<!-- 工具菜单 -->
+<div class="toolbar">
+  <button id="toolBrush" class="btn active">画笔</button>
+  <button id="toolEraser" class="btn">橡皮</button>
+  <button id="undo" class="btn">撤销</button>
+  <button id="clear" class="btn">清空</button>
+  <button id="downloadMask" class="btn">下载Mask(PNG)</button>
+  <button id="exportJson" class="btn">导出JSON</button>
+</div>
+
+<!-- 预览区：底图 img + 遮罩 canvas 叠加 -->
+<div class="stage">
+  <img id="basePreview" alt="base preview" />
+  <canvas id="maskCanvas"></canvas>
+</div>
