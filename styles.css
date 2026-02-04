@@ -1,187 +1,56 @@
-:root{
-  --border:#e6e6e6;
-  --bg:#ffffff;
-  --muted:#666;
-  --muted2:#888;
-  --primary:#0b5fff;
-}
-
-*{ box-sizing:border-box; }
-
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-  background:#fff;
-  color:#111;
-}
-
-.container{
-  max-width: 980px;
-  margin: 24px auto 64px;
-  padding: 0 16px;
-}
-
-h1{
-  margin: 6px 0 8px;
-  font-size: 34px;
-}
-
-.hint{
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.card{
-  border:1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 16px 14px;
-  margin: 14px 0;
-  background: var(--bg);
-}
-
-h2{
-  margin: 0 0 12px;
-  font-size: 20px;
-}
-
-.field{
-  margin: 12px 0;
-}
-
-.label{
-  margin-bottom: 6px;
-  color: #222;
-  font-size: 14px;
-}
-
-.toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin: 8px 0 10px;
-}
-
-.toolbar2{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-top: 6px;
-}
-
-.btn{
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background:#fff;
-  cursor:pointer;
-  font-size: 14px;
-}
-
-.btn:hover{ border-color:#cfcfcf; }
-
-.btn.active{
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.btn.primary{
-  border-color: var(--primary);
-  background: var(--primary);
-  color:#fff;
-}
-
-.hint2{
-  margin: 8px 0 0;
-  color: var(--muted2);
-  font-size: 13px;
-}
-
-.range{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#222;
-  font-size: 14px;
-}
-.range input{ width: 220px; }
-#brushSizeVal{ color: var(--muted); }
-
-.row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  align-items:center;
-  margin-bottom: 10px;
-}
-
-.select{
-  padding: 8px 10px;
-  border-radius: 10px;
-  border:1px solid var(--border);
-  background:#fff;
-  min-width: 260px;
-}
-
-.textarea{
-  width: 100%;
-  min-height: 140px;
-  resize: vertical;
-  padding: 12px;
-  border-radius: 12px;
-  border:1px solid var(--border);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.stageWrap{ margin-top: 12px; }
-.stageTitle{
-  font-size: 14px;
-  color:#222;
-  margin: 6px 0 8px;
-}
-
-.stage{
+/* styles.css（关键样式） */
+.stage {
   position: relative;
-  border: 1px dashed var(--border);
+  display: inline-block;
+  width: 100%;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
-  overflow: hidden;
-  min-height: 180px;
-  background: #fafafa;
+  padding: 8px;
+  background: #fff;
 }
 
-.stage img{
-  display:block;
-  max-width: 100%;
+.stage img {
+  display: block;
+  width: 100%;
   height: auto;
 }
 
-#maskCanvas{
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  touch-action: none;
+#maskCanvas {
+  position: absolute;
+  left: 8px;  /* 对应 stage 的 padding */
+  top: 8px;
+  cursor: crosshair;
 }
 
-.emptyTip{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color: var(--muted);
-  font-size: 14px;
-  pointer-events:none;
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.ol{
-  margin: 10px 0 0 18px;
-  color:#222;
+.btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
 }
-code{
-  background:#f3f3f3;
-  padding: 2px 6px;
-  border-radius: 8px;
+
+.btn.active {
+  border-color: #111;
+}
+
+.btn.primary {
+  border-color: #111;
+  font-weight: 600;
+}
+
+.jsonOut {
+  white-space: pre-wrap;
+  background: #0b1020;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 12px;
+  overflow: auto;
 }
