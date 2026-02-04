@@ -3,45 +3,102 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>trench-inpaint-tool</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;max-width:900px;margin:40px auto;padding:0 16px}
-    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:12px 0}
-    button{padding:10px 14px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer}
-    input{width:100%}
-    small{color:#6b7280}
-  </style>
+  <title>trench-inpaint-tool 沟槽式油漆工具</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
-  <h1>trench-inpaint-tool 沟槽式油漆工具</h1>
-  <p><small>如果你能看到这个页面，说明 GitHub Pages 已经部署成功 ✅</small></p>
+  <div class="container">
+    <h1>trench-inpaint-tool 沟槽式油漆工具</h1>
+    <p class="hint">如果你能看到这个页面，说明 GitHub Pages 已经部署成功 ✅</p>
 
-  <div class="card">
-    <h2>1) 上传底图/参考图</h2>
-    <p>底图（现场原图）：</p>
-    <input type="file" accept="image/*" />
-    <p>参考图（结构参考）：</p>
-    <input type="file" accept="image/*" />
+    <div class="card">
+      <h2>1) 上传底图 / 参考图</h2>
+
+      <div class="field">
+        <div class="label">底图（现场原图）：</div>
+        <input id="baseFile" type="file" accept="image/*" />
+      </div>
+
+      <div class="field">
+        <div class="label">参考图（结构参考）：</div>
+        <input id="refFile" type="file" accept="image/*" />
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2) 工具菜单</h2>
+      <div class="toolbar">
+        <button id="toolBrush" class="btn active">画笔</button>
+        <button id="toolEraser" class="btn">橡皮</button>
+        <button id="undo" class="btn">撤销</button>
+        <button id="clear" class="btn">清空</button>
+        <button id="downloadMask" class="btn">下载Mask(PNG)</button>
+        <button id="exportJson" class="btn primary">导出JSON</button>
+      </div>
+
+      <div class="toolbar2">
+        <label class="range">
+          画笔大小
+          <input id="brushSize" type="range" min="2" max="80" value="24" />
+          <span id="brushSizeVal">24</span>
+        </label>
+      </div>
+
+      <p class="hint2">提示：白色=可编辑区（mask 白），黑色=锁定区（mask 黑）。</p>
+    </div>
+
+    <div class="card">
+      <h2>3) 执行要求 PROMPT</h2>
+
+      <div class="row">
+        <select id="promptPreset" class="select">
+          <option value="">选择模板（可选）</option>
+          <option value="strict_civil">工程照片严格Inpaint（MASK外像素级不变）</option>
+          <option value="simple_goal">简版（只写目标）</option>
+        </select>
+
+        <button id="applyPreset" class="btn">套用模板</button>
+        <button id="copyPrompt" class="btn">复制PROMPT</button>
+      </div>
+
+      <textarea id="promptText" class="textarea" placeholder="在这里写执行要求（PROMPT），例如：只改白色mask区域；沟槽靠右；人物/水印/路面纹理全部不动；结构参考图仅作逻辑参考不得像素复制……"></textarea>
+
+      <p class="hint2">导出JSON时，会把此 PROMPT 一起写入字段 <code>execution_prompt</code>。</p>
+    </div>
+
+    <div class="card">
+      <h2>4) 预览 & 画遮罩</h2>
+
+      <div class="stageWrap">
+        <div class="stageTitle">底图（可画遮罩）</div>
+        <div class="stage" id="baseStage">
+          <img id="basePreview" alt="base preview" />
+          <canvas id="maskCanvas"></canvas>
+          <div id="emptyTip" class="emptyTip">请先上传底图</div>
+        </div>
+      </div>
+
+      <div class="stageWrap">
+        <div class="stageTitle">参考图（仅预览）</div>
+        <div class="stage" id="refStage">
+          <img id="refPreview" alt="ref preview" />
+          <div id="refEmptyTip" class="emptyTip">可选：上传参考图</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5) 使用顺序</h2>
+      <ol class="ol">
+        <li>上传底图（必选）/参考图（可选）</li>
+        <li>在“执行要求 PROMPT”里写规则（可套模板）</li>
+        <li>用画笔/橡皮在底图上画遮罩</li>
+        <li>下载 Mask(PNG) 或导出 JSON</li>
+      </ol>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>2) 下一步</h2>
-    <p>你可以继续加“画遮罩、导出 JSON”等功能。先把网站跑起来最重要。</p>
-  </div>
+  <script src="./script.js"></script>
 </body>
 </html>
-<!-- 工具菜单 -->
-<div class="toolbar">
-  <button id="toolBrush" class="btn active">画笔</button>
-  <button id="toolEraser" class="btn">橡皮</button>
-  <button id="undo" class="btn">撤销</button>
-  <button id="clear" class="btn">清空</button>
-  <button id="downloadMask" class="btn">下载Mask(PNG)</button>
-  <button id="exportJson" class="btn">导出JSON</button>
-</div>
-
-<!-- 预览区：底图 img + 遮罩 canvas 叠加 -->
-<div class="stage">
-  <img id="basePreview" alt="base preview" />
-  <canvas id="maskCanvas"></canvas>
-</div>
